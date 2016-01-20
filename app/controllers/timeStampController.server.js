@@ -2,111 +2,96 @@
 
 var AJAXRequest = require('ajax-request');
 var url = require('url');
+var Counters = require('../models/counters');
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+              'August', 'September', 'October', 'November', 'December'];
 
 function TimeStamp() {
-    
-    var months = ["january", "february", "march", "april", "may", "june",
-                  "july", "august", "september", "october", "november",
-                  "december"];
-    var monthsShort = ["jan", "feb", "mar", "apr", "may", "jun",
-                       "jul", "aug", "sept", "oct", "nov", "dec"];
-    
+
     function updateRequestCounter() {
-        
+
     }
-    
+
     function getSunriseSunset() {
-        
+
     }
-    
+
     function getTimeZone() {
-        
+
     }
-    
-    function isDate(arr) {
-        
-        var monthFound = false;
-        var yearFound = false;
-        var dayFound = false;
-        
-        var dateObj = {};
-        
-        function check(el) {
-            if (String(el).length === 4 && !isNaN(Number(el))) {
-                yearFound = true;
-                dateObj.year = el;
-            }
-            if (months.indexOf(el) > -1 || monthsShort.indexOf(el) > -1) {
-                monthFound = true;
-                dateObj.month = el;
-            }
-        }
-        
-        function insertDay(el) {
-            if (dateObj.year !== el && dateObj.month !== el) {
-                dateObj.day = el;
-            }
-        }
-        
-        arr.forEach(check);
-        if (yearFound && monthFound) {
-            arr.forEach(insertDay);
-        }
-        
-        
-                           
-    }
-    
-    function convertToUnix() {
-        
-    }
-    
-    function convertToNatural() {
-        
-    }
-    
+
     function resolveUrlStr(req) {
         var reqUrl = url.parse(req.url).pathname;
         var toCut = /\/api\/timestamp\//i;
-        
+
         if (toCut.test(reqUrl)) {
             reqUrl = decodeURIComponent(reqUrl.replace(toCut, ""));
         }
-        
+
         return reqUrl;
     }
-    
-    function buildOutObj(reqUrl) {
-        var out = {
-            "unix": null,
-            "natural": null
-        };
-        
-        if (isNaN(Number(reqUrl))) {
-            var urlSplit = reqUrl.split(/[^a-b0-9]/i);
-            if (isDate(urlSplit)) {
-                out = {
-                    "unix": convertToUnix(urlSplit),
-                    "natural": reqUrl
-                };
-        } else {
-            out = {
-                "unix": Number(reqUrl),
-                "natural": convertToNatural(reqUrl)
-            };
-        }
-        
+
+    function populateObj(reqUrl, out) {
+        var d = new Date(reqUrl);
+        out.unix = d.getTime();
+        out.natural = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+        out.dateString = d.toString();
         return out;
     }
-    
-    this.getTime = function getTime(req, res) {
+
+    function buildOutObj(reqUrl) {
+        var count = 0;
+        
+        /*
+        Counters
+            .find({ })
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					console.log(result);
+				}
+			);
+		//*/
+        
+        var out = {
+            "unix": null,
+            "natural": null,
+            "dateString": null
+        };
+        
+        if (Number(reqUrl)) {
+            out = populateObj(reqUrl, out);
+        } else if (Date.parse(reqUrl)) {
+            out = populateObj(reqUrl, out);
+        } else {
+            var splitStr = reqUrl.split(/[^a-b0-9]/i);
+            splitStr.unshift(splitStr.splice(1, 1)[0]);
+            var corrected = splitStr.join(' ');
+            if (Date.parse(corrected)) {
+                out = populateObj(corrected, out);
+            }
+        }
+        
+        /*
+        Counters
+			.findOneAndUpdate({ }, { $inc: { 'nbrOfRequests.requests': 1 } })
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					out.nmbrOfRequestsToDate = result.nbrOfRequests.requests;
+				}
+			);
+        //*/
+
+        return out;
+    }
+
+    this.getTime = function(req, res) {
         var reqUrl = resolveUrlStr(req);
         var out = buildOutObj(reqUrl);
 
         res.json(out);
     }
- 
+
 }
 
-
 module.exports = TimeStamp;
+

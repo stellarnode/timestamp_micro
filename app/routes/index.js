@@ -18,6 +18,11 @@ module.exports = function (app, passport) {
 	var timeStamp = new TimeStamp();
 
 	app.route('/')
+		.get(function (req, res) {
+			res.sendFile(path + '/public/timestamp.html');
+		});
+
+	app.route('/clementine')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/index.html');
 		});
