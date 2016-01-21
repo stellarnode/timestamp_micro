@@ -31,10 +31,9 @@ module.exports = function (app, passport) {
 	app.route(/\/api\/timestamp\//i)
 		.get(timeStamp.getTime);
 		
-	app.route(/\/api\/whoami\//i)
+	app.route(/\/api\/whoami\/?/i)
 		.get(function(req, res) {
-			var out = req.headers;
-			headerParser(req, res);
+			var out = headerParser(req, res);
 			res.json(out);
 			//res.redirect('/whoami');
 		});

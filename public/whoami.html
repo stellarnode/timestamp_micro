@@ -1,1 +1,77 @@
-hello world
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Request Header Parser API service.</title>
+		
+		<!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	
+	    <link href="/public/css/timestamp.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">API Basejumps</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/">Timestamp</a></li>
+              <li><a href="/api/whoami/">HeaderParser</a></li>
+              <li><a href="/README.md">Read Me</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+	<header class=container>
+	    <div class="row">
+	        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        		<h1 class="site-title">Request Header Parser API service</h1>
+        		<h4>To use the service:</h4>
+        		<ul class="instructions">
+        		    <li>Point your browser or send a GET request to the following path 
+        		    on our domain: <code>/api/whoami/</code>.</li>
+        		    <li>In the code snippet below, you can a sample output of this API. 
+        		    The API responds with a JSON string. This is the information your browser sends to servers with
+        		    every request.</li>
+        		</ul>
+    		</div>
+		</div>
+	</header>
+
+	<body>
+		<div class="container">
+			<div class="row">
+	            <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+	                <br>
+	                <div id="interaction">
+	                	
+	                </div>
+	            </div>
+	        </div> 
+		</div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<script type="text/javascript" src="controllers/clickController.client.js"></script>
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+		<script type="text/javascript" src="controllers/headerParser.client.js"></script>
+	</body>
+
+</html>
