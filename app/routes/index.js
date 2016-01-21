@@ -3,6 +3,7 @@
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var TimeStamp = require(path + '/app/controllers/timeStampController.server.js');
+var headerParser = require(path + '/app/controllers/headerParser.server.js');
 
 module.exports = function (app, passport) {
 
@@ -21,6 +22,25 @@ module.exports = function (app, passport) {
 		.get(function (req, res) {
 			res.sendFile(path + '/public/timestamp.html');
 		});
+		
+	app.route('/whoami')
+		.get(function (req, res) {
+			res.sendFile(path + '/public/whoami.html');
+		});
+
+	app.route(/\/api\/timestamp\//i)
+		.get(timeStamp.getTime);
+		
+	app.route(/\/api\/whoami\//i)
+		.get(function(req, res) {
+			var out = req.headers;
+			headerParser(req, res);
+			res.json(out);
+			//res.redirect('/whoami');
+		});
+
+
+// The rest is from the ClementineJS FCC boilerplate...
 
 	app.route('/clementine')
 		.get(isLoggedIn, function (req, res) {
@@ -62,6 +82,4 @@ module.exports = function (app, passport) {
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
 		
-	app.route(/\/api\/timestamp\//i)
-		.get(timeStamp.getTime);
 };

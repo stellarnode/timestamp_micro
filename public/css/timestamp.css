@@ -53,3 +53,19 @@ body {
 .submit-entry {
     
 }
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.nav,
+.navbar,
+.navbar-default,
+.navbar-collapse,
+.nav.navbar.navbar-default {
+    background-color: rgba(236, 240, 241,1.0);
+}
+
+.navbar-default {
+    background-image: none;
+}
