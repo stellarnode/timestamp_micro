@@ -44,10 +44,12 @@ body {
 .enter-date,
 .submit-entry {
     display: inline-block;
+    margin: 20px auto 30px !important;
 }
 
 .enter-date {
     font-size: 1.5em;
+    width: 100% !important;
 }
 
 .submit-entry {
